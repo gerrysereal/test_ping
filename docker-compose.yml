@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  web:
+    image: nginx:alpine
+    container_name: test-ping-nginx
+    volumes:
+      - ./app:/usr/share/nginx/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - Infra-Net
+
+  php:
+    image: php:8.2-fpm
+    container_name: test-ping-php
+    volumes:
+      - ./app:/usr/share/nginx/html
+    networks:
+      - Infra-Net
+
+networks:
+  Infra-Net:
+    external: true
